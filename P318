@@ -1,8 +1,9 @@
 Problem:
+318. Maximum Product of Word Lengths
 Given a string array words, find the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters.
 You may assume that each word will contain only lower case letters. If no such two words exist, return 0.
 
-
+Tag: [Bit Manipulation]
 
 Solution:
 public int MaxProduct(string[] words) {
@@ -27,3 +28,6 @@ public int MaxProduct(string[] words) {
 			}
 			return max;
     }
+
+Explaination:
+位操作解决是否有相同字母
