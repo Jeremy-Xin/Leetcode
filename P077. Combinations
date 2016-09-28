@@ -1,0 +1,49 @@
+Problem:
+Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+
+For example,
+If n = 4 and k = 2, a solution is:
+
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+
+Tags: [back tracking]
+
+Solution: [c#]
+    public IList<IList<int>> Combine(int n, int k) {
+      List<IList<int>> result = new List<IList<int>>();
+      int pos = 0;
+			IList<int> curList = new List<int>();
+			int[] nums = new int[k];
+			while (pos >= 0)
+			{
+				nums[pos]++;
+				if (nums[pos] <= n)
+				{
+					if (pos == k - 1)
+					{
+						var list = new List<int>(nums);
+						result.Add(list);
+					}
+					else
+					{
+						pos++;
+						nums[pos] = nums[pos - 1];
+					}
+				}
+				else
+				{
+					pos--;
+				}
+			}
+			return result1;
+    }
+    
+Explanation:
+非递归回溯
