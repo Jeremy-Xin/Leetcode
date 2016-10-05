@@ -8,7 +8,7 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 
 Tags: [Linked List]
 
-Solution:
+Solution: [java]
 public ListNode reverseList(ListNode head) {
         if (head == null) return null;
         ListNode cur = head;
