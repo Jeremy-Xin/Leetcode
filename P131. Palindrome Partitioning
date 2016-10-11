@@ -1,0 +1,77 @@
+Problem:
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+For example, given s = "aab",
+Return
+
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+
+
+Tags: [Dynamic Programming] [Back Tracking]
+
+
+Solution: 
+[java] 动态规划
+public List<List<String>> partition(String) {
+	boolean[][] p = new boolean[s.length()-1][s.length()-1];
+	List<List<String>>[] results = new List<>[s.length()+1];
+	result[0] = Arrays.asList(new String[]{Arrays.asList(new String[]{})});
+	for (int right = 0; right < s.length(); right++) {
+		results[right+1] = new ArrayList<>();
+		for (int left = 0; left <= right; left++) {
+			if (s.charAt(left) != s.charAt(right)) { continue; }
+			p[left][right] = right-left <= 1 || p[left+1][right-1];
+			if (!p[left][right]) { continue; }
+			String sub = s.substring(left, right+1);
+			for (List<String> prev : results[left]) {
+				List<String> list = new ArrayList<>(prev);
+				list.add(sub);
+				results[right+1].add(list);
+			}
+		}
+	}
+	return results[results.length-1];
+}
+
+// 回溯 递归
+[c#]
+public IList<IList<string>> Partition(string s)
+		{
+			List<IList<string>> result = new List<IList<string>>();
+			SubPar(result, new List<string>(), s, 0);
+			return result;
+		}
+
+		private void SubPar(IList<IList<string>> result, IList<string> cur, string s, int start)
+		{
+			if (start == s.Length)
+			{
+				result.Add(new List<string>(cur));
+				return;
+			}
+
+			for (int i = start; i < s.Length; i++)
+			{
+				string t = s.Substring(start, i - start + 1);
+				if (isPalindrome(t))
+				{
+					cur.Add(t);
+					SubPar(result, cur, s, i + 1);
+					cur.RemoveAt(cur.Count - 1);
+				}
+			}
+		}
+
+		private bool isPalindrome(string s)
+		{
+			for (int i = 0, j = s.Length - 1; i < j; i++, j--)
+			{
+				if (s[i] != s[j]) return false;
+			}
+			return true;
+		}
