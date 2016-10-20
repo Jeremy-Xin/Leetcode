@@ -1,0 +1,61 @@
+Problem:
+Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+
+For example:
+Given "25525511135",
+
+return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+
+
+Tags:[BackTracking]
+
+
+Solution: [C#]
+public IList<string> RestoreIpAddresses(string s) {
+        if (s.Length > 12 || s.Length < 4) return new List<string>();
+			List<string> result = new List<string>();
+			backTrack(result, new List<string>(), s, 0, 0);
+			return result;
+    }
+    
+    public void backTrack(List<string> result, List<string> cur, string ori, int pointer, int index)
+		{
+			if (index == 3)
+			{
+				string str = ori.Substring(pointer);
+				if (isValid(str))
+				{
+					cur.Add(str);
+					result.Add(string.Join(".", cur));
+					cur.RemoveAt(cur.Count - 1);
+				}
+				return;
+			}
+			for (int i = 1; i <=3; i++)
+			{
+				if (pointer + i <= ori.Length)
+				{
+					string str = ori.Substring(pointer, i);
+					if (isValid(str))
+					{
+						cur.Add(str);
+						backTrack(result, cur, ori, pointer + i, index + 1);
+						cur.RemoveAt(cur.Count - 1);
+					}
+				}
+			}
+		}
+		
+		private bool isValid(string s)
+		{
+			try
+			{
+			    if (s.StartsWith("0") && s.Length > 1) return false;
+				int num = int.Parse(s);
+				return num >= 0 && num <= 255;
+			}
+			catch
+			{
+				return false;
+			}
+		}
